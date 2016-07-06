@@ -5,34 +5,12 @@ var fileUrl = 'sample-script.txt';
 
 $.get(fileUrl, function(data) {
 	//console.log(data);
-	var myObject = $.parseJSON(data);
+var myObject = $.parseJSON(data);
 	//console.log(myObject);
 	generateFunctions(myObject);
-	});
+});
 
 var generateFunctions = function (object){
-
-	/*
-	var1 = 1
-	var2 = 2
-	init  [{"cmd" : "#setup" }]
-	setup
-		[{"cmd":"update", "id": "var1", "value":3.5},
-	    {"cmd":"print", "value": "#var1"},
-	    {"cmd":"#sum", "id": "var1", "value1":"#var1", "value2":"#var2"},
-	    {"cmd":"print", "value": "#var1"},
-	    {"cmd":"create", "id": "var3", "value":5},
-	    {"cmd":"delete", "id": "var1"},
-	    {"cmd":"#printAll"}]
-	sum	
-		[{"cmd":"add", "id": "$id", "operand1":"$value1", "operand2":"$value2"}]
-	printAll
-		[{"cmd":"print", "value": "#var1"},
-	    {"cmd":"print", "value": "#var2"},
-	    {"cmd":"print", "value": "#var3"}]
-	
-	
-	*/
 
 	// initializing two variables
 	var var1 = object.var1, var2 = object.var2;
@@ -64,9 +42,12 @@ var generateFunctions = function (object){
 			//nothing much
 		}
 		function printAll() {
-			console.log(var1);
-			console.log(var2);
-			console.log(var3);
+			var itemsToPrint = [var1,var2,var3];
+
+			for (var i=0;i<itemsToPrint.length;i++){
+				console.log(itemsToPrint[i]);
+				$('ul').append('<li>' + itemsToPrint[i] + '</li>');	
+			};
 		}
 		function update(val, newVal){
 			val = newVal;
@@ -79,6 +60,7 @@ var generateFunctions = function (object){
 		}
 		function print(valueToPrint){
 			console.log(valueToPrint);
+			$('ul').append('<li>' + valueToPrint + '</li>');
 		}
 	}
 };
